@@ -1,5 +1,5 @@
 server {
-    listen 8000;
+    listen ${LISTEN_PORT};
 
     location /static/static {
         alias /vol/static;
@@ -10,12 +10,9 @@ server {
     }
 
     location / {
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header Host $http_host;
-        # we don't want nginx trying to do something clever with
-        # redirects, we set the Host: header above already.
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:9000;
+        include              /etc/nginx/gunicorn_headers;
+        proxy_redirect       off;
+        proxy_pass           http://${APP_HOST}:${APP_PORT};
+        client_max_body_size 10M;
     }
 }
