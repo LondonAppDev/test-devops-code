@@ -10,10 +10,8 @@ server {
     }
 
     location / {
-        proxy_redirect       off;
-        proxy_pass           http://${APP_HOST}:${APP_PORT};
-        include              /etc/nginx/gunicorn_headers;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        client_max_body_size 10M;
+        uwsgi_pass              ${APP_HOST}:${APP_PORT};
+        include                 /etc/nginx/uwsgi_params;
+        client_max_body_size    10M;
     }
 }
