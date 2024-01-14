@@ -16,6 +16,6 @@ server {
         # we don't want nginx trying to do something clever with
         # redirects, we set the Host: header above already.
         proxy_redirect off;
-        proxy_pass http://app:9000;
+        proxy_pass http://127.0.0.1:9000;
     }
 }
