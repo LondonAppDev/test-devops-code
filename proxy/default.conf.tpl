@@ -13,6 +13,7 @@ server {
         proxy_redirect       off;
         proxy_pass           http://${APP_HOST}:${APP_PORT};
         include              /etc/nginx/gunicorn_headers;
+        proxy_set_header X-Forwarded-Proto $scheme;
         client_max_body_size 10M;
     }
 }
